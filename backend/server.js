@@ -2,7 +2,7 @@ const express = require('express');
 const colors = require('colors');
 const dotenv = require('dotenv');
 const userRoutes = require('./routes/userRoutes');
-const { chats } = require('./data/data');
+const chatRoutes = require('./routes/chatRoutes');
 const connectDB = require('./config/db');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
@@ -18,6 +18,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/user', userRoutes);
+app.use('/api/chat', chatRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
