@@ -75,7 +75,7 @@ const createGroupChat = asyncHandler(async (req, res) => {
   if (!req.body.users || !req.body.name) {
     return res
       .status(400)
-      .send({ message: 'Please fill in all the necessary fields' });
+      .send({ message: 'Please fill in all the required fields' });
   }
 
   var users = JSON.parse(req.body.users);
