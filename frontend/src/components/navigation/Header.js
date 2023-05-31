@@ -26,7 +26,7 @@ import ProfileModal from '../../miscellaneous/ProfileModal';
 import { ChatState } from '../../context/ChatProvider';
 import axios from 'axios';
 import ChatLoading from '../ChatLoading';
-import UserListItem from '../userAvatar/UserListItem';
+import UserListItem from '../userDisplay/UserListItem';
 
 const Header = () => {
   const [search, setSearch] = useState('');

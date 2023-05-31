@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   Box,
   Button,
@@ -13,7 +14,6 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
 import { ChatState } from '../context/ChatProvider';
 import axios from 'axios';
 import UserListItem from '../components/userDisplay/UserListItem';
@@ -26,9 +26,9 @@ const GroupChatModal = ({ children }) => {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const { user, chats, setChats } = ChatState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
-  const { user, chats, setChats } = ChatState();
 
   const handleSearch = async (query) => {
     setSearch(query);
@@ -136,7 +136,7 @@ const GroupChatModal = ({ children }) => {
     <>
       <span onClick={onOpen}>{children}</span>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader
