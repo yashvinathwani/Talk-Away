@@ -1,13 +1,101 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChatState } from '../context/ChatProvider';
-import { Box, IconButton, Text } from '@chakra-ui/react';
+import {
+  Box,
+  FormControl,
+  IconButton,
+  Input,
+  Spinner,
+  Text,
+  useToast,
+} from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import ProfileModal from '../miscellaneous/ProfileModal';
 import { getSender, getSenderProfile } from '../config/ChatLogics';
 import UpdateGroupChatModal from '../miscellaneous/UpdateGroupChatModal';
+import axios from 'axios';
+import ScrollableChat from './ScrollableChat';
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
+  const [messages, setMessages] = useState([]);
+  const [laoding, setLoading] = useState(false);
+  const [newMessage, setNewMessage] = useState('');
+
   const { user, selectedChat, setSelectedChat } = ChatState();
+  const toast = useToast();
+
+  const fetchMessages = async () => {
+    if (!selectedChat) return;
+
+    try {
+      const config = {
+        headers: {
+          Authorization: user.token,
+        },
+      };
+
+      setLoading(true);
+
+      const { data } = await axios.get(
+        `/api/message/${selectedChat._id}`,
+        config
+      );
+
+      setMessages(data);
+      setLoading(false);
+    } catch (error) {
+      toast({
+        title: 'Error Occured!',
+        description: 'Failed to load the Messages',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom',
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetchMessages();
+  }, [selectedChat]);
+
+  const sendMessage = async (event) => {
+    if (event.key === 'Enter' && newMessage) {
+      try {
+        const config = {
+          headers: {
+            'Content-type': 'application/json',
+            Authorization: user.token,
+          },
+        };
+
+        setNewMessage('');
+        const { data } = await axios.post(
+          '/api/message',
+          {
+            content: newMessage,
+            chatId: selectedChat._id,
+          },
+          config
+        );
+
+        setMessages([...messages, data]);
+      } catch (error) {
+        toast({
+          title: 'Error Occured!',
+          description: 'Failed to send the Message',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+          position: 'bottom',
+        });
+      }
+    }
+  };
+
+  const typingHandler = (e) => {
+    setNewMessage(e.target.value);
+  };
 
   return (
     <>
@@ -42,6 +130,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 <UpdateGroupChatModal
                   fetchAgain={fetchAgain}
                   setFetchAgain={setFetchAgain}
+                  fetchMessages={fetchMessages}
                 />
               </>
             )}
@@ -57,7 +146,45 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             h='100%'
             borderRadius='lg'
             overflowY='hidden'
-          ></Box>
+          >
+            {laoding ? (
+              <Spinner
+                size='xl'
+                w={20}
+                h={20}
+                alignSelf='center'
+                margin='auto'
+              />
+            ) : (
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  overflowY: 'scroll',
+                  scrollbarWidth: 'none',
+                }}
+              >
+                <ScrollableChat messages={messages} />
+              </div>
+            )}
+
+            <FormControl
+              onKeyDown={sendMessage}
+              isRequired
+              mt={3}
+              display='flex'
+            >
+              <Input
+                variant='filled'
+                bg='#E0E0E0'
+                placeholder='Type a Message...'
+                onChange={typingHandler}
+                value={newMessage}
+                border='1px'
+                borderColor='grey'
+              />
+            </FormControl>
+          </Box>
         </>
       ) : (
         <Box
