@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ChatState } from '../context/ChatProvider';
-import { Box, Button, Stack, Text, useToast } from '@chakra-ui/react';
+import { Avatar, Box, Button, Stack, Text, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { AddIcon } from '@chakra-ui/icons';
 import ChatLoading from './ChatLoading';
@@ -88,6 +88,7 @@ const MyChats = ({ fetchAgain }) => {
           <Stack overflowY='scroll'>
             {chats.map((chat) => (
               <Box
+                display='flex'
                 onClick={() => setSelectedChat(chat)}
                 cursor='pointer'
                 bg={
@@ -109,11 +110,39 @@ const MyChats = ({ fetchAgain }) => {
                 borderRadius='lg'
                 key={chat._id}
               >
-                <Text>
-                  {!chat.isGroupChat
-                    ? getSender(loggedUser, chat.users)
-                    : chat.chatName}
-                </Text>
+                <Avatar
+                  mt='7px'
+                  mr={1}
+                  size='sm'
+                  cursor='pointer'
+                  src={
+                    !chat.isGroupChat
+                      ? chat.users[0]._id === user?._id
+                        ? chat.users[1].pic
+                        : chat.users[0].pic
+                      : 'https://icon-library.com/images/group-of-people-icon-png/group-of-people-icon-png-11.jpg'
+                  }
+                />
+
+                <Box display='flex' flexDir='column' ml={2}>
+                  <Text fontWeight='bold'>
+                    {!chat.isGroupChat
+                      ? getSender(loggedUser, chat.users)
+                      : chat.chatName}
+                  </Text>
+                  {chat.latestMessage && (
+                    <Text fontSize='s'>
+                      <>
+                        {chat.latestMessage.sender._id !== user._id
+                          ? `${chat.latestMessage.sender.name} : `
+                          : ''}
+                      </>
+                      {chat.latestMessage.content.length > 40
+                        ? chat.latestMessage.content.substring(0, 41) + ' ...'
+                        : chat.latestMessage.content}
+                    </Text>
+                  )}
+                </Box>
               </Box>
             ))}
           </Stack>
