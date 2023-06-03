@@ -27,6 +27,8 @@ import { ChatState } from '../../context/ChatProvider';
 import axios from 'axios';
 import ChatLoading from '../ChatLoading';
 import UserListItem from '../userDisplay/UserListItem';
+import { getSender } from '../../config/ChatLogics';
+import NotificationBadge, { Effect } from 'react-notification-badge';
 
 const Header = () => {
   const [search, setSearch] = useState('');
@@ -36,7 +38,14 @@ const Header = () => {
   const history = useHistory();
   const toast = useToast();
 
-  const { user, setSelectedChat, chats, setChats } = ChatState();
+  const {
+    user,
+    setSelectedChat,
+    chats,
+    setChats,
+    notification,
+    setNotification,
+  } = ChatState();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -140,8 +149,40 @@ const Header = () => {
         <div>
           <Menu>
             <MenuButton p={1}>
+              <NotificationBadge
+                count={notification.length}
+                effect={Effect.SCALE}
+              />
               <BellIcon fontSize='2xl' m={1} />
             </MenuButton>
+            <MenuList pl={2}>
+              {!notification.length && 'No New Messages'}
+              {notification.map((not) => (
+                <MenuItem
+                  key={not._id}
+                  onClick={() => {
+                    setSelectedChat(not.chat);
+                    setNotification(notification.filter((n) => n !== not));
+                  }}
+                >
+                  {not.chat.isGroupChat ? (
+                    <div>
+                      New Message in{' '}
+                      <span style={{ fontWeight: 'bold' }}>
+                        {not.chat.chatName}
+                      </span>
+                    </div>
+                  ) : (
+                    <div>
+                      New Message from{' '}
+                      <span style={{ fontWeight: 'bold' }}>
+                        {getSender(user, not.chat.users)}
+                      </span>
+                    </div>
+                  )}
+                </MenuItem>
+              ))}
+            </MenuList>
           </Menu>
 
           <Menu>
