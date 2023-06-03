@@ -7,7 +7,7 @@ import {
   isSameSenderMargin,
   isSameUser,
 } from '../config/ChatLogics';
-import { Avatar, Box, Tooltip } from '@chakra-ui/react';
+import { Avatar, Tooltip } from '@chakra-ui/react';
 
 const ScrollableChat = ({ messages }) => {
   const { user } = ChatState();

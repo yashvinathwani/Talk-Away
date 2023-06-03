@@ -29,7 +29,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
   const [loading, setLoading] = useState(false);
   const [renameLoading, setRenameLoading] = useState(false);
 
-  const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
+  const { user, selectedChat, setSelectedChat } = ChatState();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
@@ -53,18 +53,6 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
           Authorization: user.token,
         },
       };
-
-      let updatedUsers = selectedChat.users;
-
-      if (user1._id === selectedChat.groupAdmin._id) {
-        updatedUsers = selectedChat.users.filter(
-          (user) => user._id != selectedChat.groupAdmin._id
-        );
-      } else {
-        updatedUsers = selectedChat.users.filter(
-          (user) => user._id != selectedChat.groupAdmin._id
-        );
-      }
 
       const { data } = await axios.put(
         '/api/chat/groupremove',
