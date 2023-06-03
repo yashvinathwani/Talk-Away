@@ -137,8 +137,8 @@ const MyChats = ({ fetchAgain }) => {
                           ? `${chat.latestMessage.sender.name} : `
                           : ''}
                       </>
-                      {chat.latestMessage.content.length > 40
-                        ? chat.latestMessage.content.substring(0, 41) + ' ...'
+                      {chat.latestMessage.content.length > 30
+                        ? chat.latestMessage.content.substring(0, 31) + ' ...'
                         : chat.latestMessage.content}
                     </Text>
                   )}
