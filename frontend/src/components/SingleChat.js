@@ -19,7 +19,7 @@ import Lottie from 'react-lottie';
 import animationData from '../animations/typing.json';
 import io from 'socket.io-client';
 
-const ENDPOINT = 'http://localhost:5000';
+const ENDPOINT = 'https://talk-away-two.vercel.app/';
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
