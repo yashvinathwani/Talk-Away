@@ -6,7 +6,7 @@ const chatRoutes = require('./routes/chatRoutes');
 const messageRoutes = require('./routes/messageRoutes');
 const connectDB = require('./config/db');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
-import path from 'path';
+const path = require('path');
 
 dotenv.config();
 connectDB();
