@@ -45,7 +45,7 @@ const Login = () => {
       };
 
       const { data } = await axios.post(
-        'https://talk-away-api.onrender.com//api/user/login',
+        'https://talk-away-api.onrender.com/api/user/login',
         { email, password },
         config
       );
