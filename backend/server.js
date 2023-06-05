@@ -6,12 +6,14 @@ const chatRoutes = require('./routes/chatRoutes');
 const messageRoutes = require('./routes/messageRoutes');
 const connectDB = require('./config/db');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
+const cors = require('cors');
 
 dotenv.config();
 connectDB();
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
