@@ -40,7 +40,6 @@ const Login = () => {
     try {
       const config = {
         headers: {
-          'Access-Control-Allow-Origin': '*',
           'Content-type': 'application/json',
         },
       };
