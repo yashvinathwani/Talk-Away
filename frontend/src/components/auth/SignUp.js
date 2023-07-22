@@ -120,7 +120,7 @@ const SignUp = () => {
 
       localStorage.setItem('userInfo', JSON.stringify(data));
       setLoading(false);
-      history.push('/chats');
+      history.push('https://talk-away.onrender.com/chats');
     } catch (error) {
       toast({
         title: 'Error Occured!',
