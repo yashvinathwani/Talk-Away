@@ -105,7 +105,7 @@ const SignUp = () => {
       };
 
       const { data } = await axios.post(
-        '/api/user',
+        'https://talk-away-api.onrender.com/api/user',
         { name, email, password, pic },
         config
       );

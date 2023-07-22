@@ -75,7 +75,10 @@ const Header = () => {
         },
       };
 
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      const { data } = await axios.get(
+        `https://talk-away-api.onrender.com/api/user?search=${search}`,
+        config
+      );
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -101,7 +104,11 @@ const Header = () => {
         },
       };
 
-      const { data } = await axios.post('/api/chat', { userId }, config);
+      const { data } = await axios.post(
+        'https://talk-away-api.onrender.com/api/chat',
+        { userId },
+        config
+      );
 
       if (!chats.find((c) => c._id === data._id)) {
         setChats([data, ...chats]);

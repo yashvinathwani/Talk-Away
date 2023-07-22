@@ -55,7 +55,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
       };
 
       const { data } = await axios.put(
-        '/api/chat/groupremove',
+        'https://talk-away-api.onrender.com/api/chat/groupremove',
         {
           chatId: selectedChat._id,
           userId: user1._id,
@@ -119,7 +119,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
       };
 
       const { data } = await axios.put(
-        '/api/chat/groupadd',
+        'https://talk-away-api.onrender.com/api/chat/groupadd',
         {
           chatId: selectedChat._id,
           userId: user1._id,
@@ -158,7 +158,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
       };
 
       const { data } = await axios.put(
-        '/api/chat/rename',
+        'https://talk-away-api.onrender.com/api/chat/rename',
         {
           chatId: selectedChat._id,
           chatName: groupChatName,
@@ -199,7 +199,10 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
         },
       };
 
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      const { data } = await axios.get(
+        `https://talk-away-api.onrender.com/api/user?search=${search}`,
+        config
+      );
 
       setSearchResult(data);
       setLoading(false);

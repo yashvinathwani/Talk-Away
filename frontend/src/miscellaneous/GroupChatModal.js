@@ -46,7 +46,10 @@ const GroupChatModal = ({ children }) => {
         },
       };
 
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      const { data } = await axios.get(
+        `https://talk-away-api.onrender.com/api/user?search=${search}`,
+        config
+      );
 
       setLoading(false);
       setSearchResult(data);
@@ -82,7 +85,7 @@ const GroupChatModal = ({ children }) => {
       };
 
       const { data } = await axios.post(
-        '/api/chat/group',
+        'https://talk-away-api.onrender.com/api/chat/group',
         {
           name: groupChatName,
           users: JSON.stringify(selectedUsers.map((user) => user._id)),
