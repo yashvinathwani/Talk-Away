@@ -19,7 +19,7 @@ const HomePage = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('userInfo'));
     if (user) {
-      history.push('https://talk-away.onrender.com/chats');
+      history.push('/chats');
     }
   }, [history, localStorage.getItem('userInfo')]);
 

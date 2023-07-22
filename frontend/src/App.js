@@ -7,7 +7,7 @@ function App() {
   return (
     <div className='App'>
       <Route path='/' component={HomePage} exact />
-      <Route path='https://talk-away.onrender.com/chats' component={ChatPage} />
+      <Route path='/chats' component={ChatPage} />
     </div>
   );
 }

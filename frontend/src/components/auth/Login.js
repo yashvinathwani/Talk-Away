@@ -61,7 +61,7 @@ const Login = () => {
       localStorage.setItem('userInfo', JSON.stringify(data));
       setLoading(false);
 
-      history.push('https://talk-away.onrender.com/chats');
+      history.push('/chats');
 
       window.location.reload(); // To load the user data for the profile option on the top right hand corner
     } catch (error) {
